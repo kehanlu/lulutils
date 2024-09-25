@@ -1,0 +1,10 @@
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_001.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_002.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_003.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_004.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_005.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_006.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_007.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_008.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_009.wav
+/home/khlu/nas/Datasets/Accentdb/accentdb_extended/data/american/speaker_01/american_s01_010.wav
