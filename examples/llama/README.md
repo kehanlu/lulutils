@@ -4,7 +4,13 @@
 - `--output_path`, `-o` (required): Path for the output JSONL file.
 - `--model_id` (optional): ID of the LLM model to use. Default: "meta-llama/Meta-Llama-3-8B-Instruct"
 - `--batch_size` (optional): Number of items to process in each batch. Default: 16
+
+- `--temperature` (optional): Temperature for sampling. Default: 1
+- `--top_p` (optional): Top-p for sampling. Default: 1
+- `--do_sample` (optional): Whether to use sampling. Default: True
 - `--max_new_tokens` (optional): Maximum number of new tokens to generate. Default: 256
+
+- `--cache_dir` (optional): Cache directory for the model."
 
 ```
 python examples/llama/run_llama3_generation.py -i examples/llama/llama3_input.jsonl -o examples/llama/outputs.jsonl --batch_size 32 --max_new_tokens 512
