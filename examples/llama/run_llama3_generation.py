@@ -8,7 +8,7 @@ import os
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from tqdm import tqdm
 
-from lulutils.check_filename import check_filename
+from workspace.lulutils.lulutils.utils.check_filename import check_filename
 
 HF_TOKEN = os.getenv("HF_TOKEN") # export HF_TOKEN='your_token'
 
