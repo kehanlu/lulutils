@@ -51,3 +51,13 @@ def calculate_accuracy(preds, labels) -> list[int]:
             correct.append(0)
     
     return correct
+
+
+def caesar_cipher(text, shift, mode="encode"):
+    """
+    Caesar cipher.
+    """
+    if mode == "encode":
+        return "".join(chr((ord(char) - ord('a') + shift) % 26 + ord('a')) for char in text)
+    else:
+        return "".join(chr((ord(char) - ord('a') - shift) % 26 + ord('a')) for char in text)
