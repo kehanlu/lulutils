@@ -1,5 +1,4 @@
 import os
-from whisper_normalizer.basic import BasicTextNormalizer
 
 def get_filename(filepath):
     """
@@ -32,6 +31,7 @@ def check_consecutive_words(long_string, short_string):
 
 
 def normalize_text(text):
+    from whisper_normalizer.basic import BasicTextNormalizer
     normalizer = BasicTextNormalizer()
     return normalizer(text).strip()
 
@@ -51,13 +51,3 @@ def calculate_accuracy(preds, labels) -> list[int]:
             correct.append(0)
     
     return correct
-
-
-def caesar_cipher(text, shift, mode="encode"):
-    """
-    Caesar cipher.
-    """
-    if mode == "encode":
-        return "".join(chr((ord(char) - ord('a') + shift) % 26 + ord('a')) for char in text)
-    else:
-        return "".join(chr((ord(char) - ord('a') - shift) % 26 + ord('a')) for char in text)
