@@ -1,4 +1,5 @@
 import os
+import json
 
 def get_filename(filepath):
     """
@@ -52,8 +53,5 @@ def calculate_accuracy(preds, labels) -> list[int]:
     
     return correct
 
-
 def load_jsonl(filepath):
-    with open(filepath, "r") as f:
-        for line in f:
-            yield json.loads(line)
+    return [json.loads(line) for line in open(filepath, "r")]
