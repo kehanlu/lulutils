@@ -51,3 +51,9 @@ def calculate_accuracy(preds, labels) -> list[int]:
             correct.append(0)
     
     return correct
+
+
+def load_jsonl(filepath):
+    with open(filepath, "r") as f:
+        for line in f:
+            yield json.loads(line)
