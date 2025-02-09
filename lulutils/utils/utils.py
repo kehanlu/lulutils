@@ -3,7 +3,7 @@ import json
 from huggingface_hub import hf_hub_download
 from .huggingface import get_hf_file_info
 
-def unique_filepath(filepath):
+def get_unique_filepath(filepath):
     """
     Generate a unique filepath by incrementing the filename.
     """
@@ -18,7 +18,7 @@ def unique_filepath(filepath):
 
 def resolve_filepath(uri) -> str:
     """
-    Support huggingface file url and local file path.
+    Resolve the filepath from the uri.
     If the file is not local, download the file from huggingface.
     """
     # Downloadable link
