@@ -1,6 +1,6 @@
 import re
 
-def get_hf_file_info(url) -> dict:
+def get_hf_file_info(uri) -> dict:
     """
     Parse a huggingface file url or a defined schema of the url to file info.
     # hf://repo_id@repo_type@revision@filename
@@ -19,12 +19,12 @@ def get_hf_file_info(url) -> dict:
       ValueError: if the url is invalid
     """
 
-    if url.startswith("hf://"):
+    if uri.startswith("hf://"):
         pattern = re.compile(r"^hf://(?P<repo_id>[^@]+)@(?P<repo_type>[^@]*)@(?P<revision>[^@]+)@(?P<filename>.+)$")
-        match = pattern.match(url)
-    elif url.startswith("https://huggingface.co/"):
+        match = pattern.match(uri)
+    elif uri.startswith("https://huggingface.co/"):
         pattern = re.compile(r"^https://huggingface\.co/(?:(?P<repo_type>datasets|models)/)?(?P<repo_id>[^/]+/[^/]+)/resolve/(?P<revision>[^/]+)/(?P<filename>.+)$")
-        match = pattern.match(url)
+        match = pattern.match(uri)
 
     if match:
         match = match.groupdict()
@@ -35,4 +35,4 @@ def get_hf_file_info(url) -> dict:
             match["repo_type"] = "dataset"
         return match
     else:
-        raise ValueError(f"Invalid URL: {url}")
+        raise ValueError(f"Invalid uri: {uri}")

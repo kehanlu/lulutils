@@ -59,14 +59,14 @@ def load_jsonl(filepath):
     return [json.loads(line) for line in open(filepath, "r")]
 
 
-def get_local_filepath(path) -> str:
+def get_local_filepath_from_uri(uri) -> str:
     """
     Support huggingface file url and local file path.
     If the file is not local, download the file from huggingface.
     """
     # Downloadable link
-    if path.startswith("hf://") or path.startswith("https://huggingface.co"):
-        info = get_hf_file_info(path)
+    if uri.startswith("hf://") or uri.startswith("https://huggingface.co"):
+        info = get_hf_file_info(uri)
         return hf_hub_download(repo_type=info["repo_type"], repo_id=info["repo_id"], filename=info["filename"], revision=info["revision"], cache_dir=os.getenv("HF_HOME"))
     else:
-        return path
+        return uri
