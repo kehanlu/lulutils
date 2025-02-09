@@ -3,9 +3,9 @@ import json
 from huggingface_hub import hf_hub_download
 from .huggingface import get_hf_file_info
 
-def get_filename(filepath):
+def unique_filepath(filepath):
     """
-    Get the filename of a file. If the file already exists, increment the filename.
+    Generate a unique filepath by incrementing the filename.
     """
     if not os.path.exists(filepath):
         return filepath
@@ -15,6 +15,18 @@ def get_filename(filepath):
         i += 1
     return f"{base}.{i}{ext}"
 
+
+def resolve_filepath(uri) -> str:
+    """
+    Support huggingface file url and local file path.
+    If the file is not local, download the file from huggingface.
+    """
+    # Downloadable link
+    if uri.startswith("hf://") or uri.startswith("https://huggingface.co"):
+        info = get_hf_file_info(uri)
+        return hf_hub_download(repo_type=info["repo_type"], repo_id=info["repo_id"], filename=info["filename"], revision=info["revision"], cache_dir=os.getenv("HF_HOME"))
+    else:
+        return uri
 
 def check_consecutive_words(long_string, short_string):
     """
@@ -58,15 +70,3 @@ def calculate_accuracy(preds, labels) -> list[int]:
 def load_jsonl(filepath):
     return [json.loads(line) for line in open(filepath, "r")]
 
-
-def get_local_filepath_from_uri(uri) -> str:
-    """
-    Support huggingface file url and local file path.
-    If the file is not local, download the file from huggingface.
-    """
-    # Downloadable link
-    if uri.startswith("hf://") or uri.startswith("https://huggingface.co"):
-        info = get_hf_file_info(uri)
-        return hf_hub_download(repo_type=info["repo_type"], repo_id=info["repo_id"], filename=info["filename"], revision=info["revision"], cache_dir=os.getenv("HF_HOME"))
-    else:
-        return uri
