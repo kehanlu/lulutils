@@ -1,10 +1,15 @@
 import os
 import json
+<<<<<<< HEAD
 from collections.abc import Iterable
+=======
+from huggingface_hub import hf_hub_download
+from .huggingface import get_hf_file_info
+>>>>>>> c6f6a3d68907bde34468c691291f17d3f62bf73f
 
-def get_filename(filepath):
+def get_unique_filepath(filepath):
     """
-    Get the filename of a file. If the file already exists, increment the filename.
+    Generate a unique filepath by incrementing the filename.
     """
     if not os.path.exists(filepath):
         return filepath
@@ -14,6 +19,18 @@ def get_filename(filepath):
         i += 1
     return f"{base}.{i}{ext}"
 
+
+def resolve_filepath(uri) -> str:
+    """
+    Resolve the filepath from the uri.
+    If the file is not local, download the file from huggingface.
+    """
+    # Downloadable link
+    if uri.startswith("hf://") or uri.startswith("https://huggingface.co"):
+        info = get_hf_file_info(uri)
+        return hf_hub_download(repo_type=info["repo_type"], repo_id=info["repo_id"], filename=info["filename"], revision=info["revision"], cache_dir=os.getenv("HF_HOME"))
+    else:
+        return uri
 
 def check_consecutive_words(long_string, short_string):
     """
