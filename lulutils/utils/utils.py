@@ -1,5 +1,6 @@
 import os
 import json
+from collections.abc import Iterable
 
 def get_filename(filepath):
     """
@@ -53,5 +54,11 @@ def calculate_accuracy(preds, labels) -> list[int]:
     
     return correct
 
-def load_jsonl(filepath):
-    return [json.loads(line) for line in open(filepath, "r")]
+def read_jsonl(filepaths) -> list[dict]:
+    """
+    read jsonl files to list of dictionaries
+    """
+    if isinstance(filepaths, str):
+        return read_jsonl([filepaths])
+    elif isinstance(filepaths, Iterable):
+        return [json.loads(line) for filepath in filepaths for line in open(filepath, "r")]
