@@ -1,8 +1,10 @@
 import os
+import json
+from collections.abc import Iterable
 
-def get_filename(filepath):
+def get_unique_filepath(filepath):
     """
-    Get the filename of a file. If the file already exists, increment the filename.
+    Generate a unique filepath by incrementing the filename.
     """
     if not os.path.exists(filepath):
         return filepath
@@ -12,6 +14,18 @@ def get_filename(filepath):
         i += 1
     return f"{base}.{i}{ext}"
 
+
+def resolve_filepath(uri) -> str:
+    """
+    Resolve the filepath from the uri.
+    If the file is not local, download the file from huggingface.
+    """
+    # Downloadable link
+    if uri.startswith("hf://") or uri.startswith("https://huggingface.co"):
+        info = get_hf_file_info(uri)
+        return hf_hub_download(repo_type=info["repo_type"], repo_id=info["repo_id"], filename=info["filename"], revision=info["revision"], cache_dir=os.getenv("HF_HOME"))
+    else:
+        return uri
 
 def check_consecutive_words(long_string, short_string):
     """
@@ -51,3 +65,12 @@ def calculate_accuracy(preds, labels) -> list[int]:
             correct.append(0)
     
     return correct
+
+def read_jsonl(filepaths) -> list[dict]:
+    """
+    read jsonl files to list of dictionaries
+    """
+    if isinstance(filepaths, str):
+        return read_jsonl([filepaths])
+    elif isinstance(filepaths, Iterable):
+        return [json.loads(line) for filepath in filepaths for line in open(filepath, "r")]
