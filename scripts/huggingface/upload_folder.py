@@ -18,6 +18,13 @@ def main(args):
     if args.mode == "normal":
         assert args.path_in_repo is not None
 
+        api.create_branch(
+            repo_id=args.repo_id,
+            repo_type="dataset",
+            branch=args.revision,
+            exist_ok=True  # Won't error if branch already exists
+        )
+
         api.upload_folder(
             folder_path=args.folder,
             path_in_repo=args.path_in_repo,
