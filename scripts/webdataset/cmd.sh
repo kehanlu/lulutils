@@ -1,7 +1,6 @@
 
 PYTHONPATH=/home/hank/research/lulutils
 shift=$1
-# python examples/webdataset/create_tar_from_manifest.py -n accentDB -i /home/khlu/lab/DeSTA3-dev/workspace/250115/manifest/accentDB.jsonl -o /home/khlu/lab/lulutils/workspace --data_root /home/khlu/nas/Datasets/Accentdb/accentdb_extended/ --shift $shift
 
 # python examples/webdataset/create_tar_from_manifest.py -n voxceleb1 -i /home/khlu/lab/DeSTA3-dev/workspace/250115/manifest/voxceleb1.jsonl -o /home/khlu/lab/lulutils/workspace --data_root /livingrooms/public/superb/VoxCeleb1 --shift $shift
 
