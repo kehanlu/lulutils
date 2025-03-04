@@ -110,7 +110,7 @@ def main(args):
         else:
             raise ValueError(f"File {data['audio_filepath']} is not in any of the data_root")
         
-
+    print("================ Start ================")
     # sort by audio_filepath    
     iterator = sorted(iterator, key=lambda x: x["audio_filepath"])
     
@@ -142,6 +142,10 @@ def main(args):
         with open(jsonl_name, "w") as f:
             for sample in samples:
                 f.write(json.dumps(sample) + "\n")
+
+    print("Total shards:", len(tar_name2keys))
+    print("Total samples:", sum([len(samples) for samples in tar_name2keys.values()]))
+    print("================ Done ================")
 
 if __name__ == "__main__":
     args = parse_args()

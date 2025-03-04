@@ -15,6 +15,7 @@ def parse_args():
 def main(args):
     api = HfApi()
 
+    print("================ Start Uploading ================")
     if args.mode == "normal":
         assert args.path_in_repo is not None
 
@@ -41,6 +42,8 @@ def main(args):
         )
     else:
         raise ValueError(f"Invalid mode: {args.mode}")
+    
+    print("================ Done ================")
 
 if __name__ == "__main__":
     args = parse_args()
