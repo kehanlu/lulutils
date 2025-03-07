@@ -15,8 +15,16 @@ def parse_args():
 def main(args):
     api = HfApi()
 
+    print("================ Start Uploading ================")
     if args.mode == "normal":
         assert args.path_in_repo is not None
+
+        api.create_branch(
+            repo_id=args.repo_id,
+            repo_type="dataset",
+            branch=args.revision,
+            exist_ok=True  # Won't error if branch already exists
+        )
 
         api.upload_folder(
             folder_path=args.folder,
@@ -34,6 +42,8 @@ def main(args):
         )
     else:
         raise ValueError(f"Invalid mode: {args.mode}")
+    
+    print("================ Done ================")
 
 if __name__ == "__main__":
     args = parse_args()

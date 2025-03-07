@@ -16,6 +16,8 @@ def parse_args():
     parser.add_argument("--maxcount", type=int, default=100000)
     parser.add_argument("--maxsize", type=int, default=1e9)
     parser.add_argument("--shift", type=int, default=0)
+
+    parser.add_argument("--require_keys", type=str, nargs="+", default=["audio_filepath"], help="Require keys in jsonl")
     return parser.parse_args()
 
 def extract_rel_path(path, roots):
@@ -52,7 +54,8 @@ def main(args):
         -i /path/to/manifest.jsonl \
         -n cool_dataset \
         -o /path/to/output_folder \
-        --data_root /path/to/data_root
+        --data_root /path/to/data_root \
+        --require_columns audio_filepath seed_transcription
     ```
 
 
@@ -84,9 +87,9 @@ def main(args):
     # check all lines are valid
     data_keys = set(iterator[0].keys())
     for data in iterator:
-        # check if all data have same keys
-        if data.get("audio_filepath") is None:
-            raise ValueError(f"File {data['audio_filepath']} does not have audio_filepath key")
+        # data_keys must include all require_keys
+        if not set(args.require_keys).issubset(set(data.keys())):
+            raise ValueError(f"JSON must have the following keys: {args.require_keys}")
         
         # check if all data have same keys
         if set(data.keys()) != data_keys:
@@ -107,7 +110,7 @@ def main(args):
         else:
             raise ValueError(f"File {data['audio_filepath']} is not in any of the data_root")
         
-
+    print("================ Start ================")
     # sort by audio_filepath    
     iterator = sorted(iterator, key=lambda x: x["audio_filepath"])
     
@@ -139,6 +142,10 @@ def main(args):
         with open(jsonl_name, "w") as f:
             for sample in samples:
                 f.write(json.dumps(sample) + "\n")
+
+    print("Total shards:", len(tar_name2keys))
+    print("Total samples:", sum([len(samples) for samples in tar_name2keys.values()]))
+    print("================ Done ================")
 
 if __name__ == "__main__":
     args = parse_args()
