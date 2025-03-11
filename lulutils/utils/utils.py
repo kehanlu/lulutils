@@ -1,6 +1,8 @@
 import os
 import json
 from collections.abc import Iterable
+from huggingface_hub import hf_hub_download
+from lulutils.utils.huggingface import get_hf_file_info
 
 def get_unique_filepath(filepath):
     """
