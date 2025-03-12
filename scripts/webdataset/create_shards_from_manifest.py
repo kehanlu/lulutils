@@ -126,7 +126,7 @@ def main(args):
             data["audio_filepath"] = str(rel_path)
             sample = {
                 "__key__": audio_id,
-                "wav": file,
+                rel_path.suffix.replace(".", ""): file,
                 "json": json.dumps(data)
             }
             
