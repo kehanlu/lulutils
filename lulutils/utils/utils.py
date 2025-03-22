@@ -3,6 +3,7 @@ import json
 from collections.abc import Iterable
 from huggingface_hub import hf_hub_download
 from lulutils.utils.huggingface import get_hf_file_info
+import builtins
 
 def get_unique_filepath(filepath):
     """
@@ -76,3 +77,51 @@ def read_jsonl(filepaths) -> list[dict]:
         return read_jsonl([filepaths])
     elif isinstance(filepaths, Iterable):
         return [json.loads(line) for filepath in filepaths for line in open(filepath, "r")]
+
+
+def print(text, color=None, bold=False):
+    """
+    Print colored and/or bold text to the terminal.
+    
+    Args:
+        text: The text to print
+        color: Color name (red, green, blue, yellow, magenta, cyan)
+        bold: Whether to make the text bold
+    """
+    # ANSI escape code components
+    colors = {
+        'red': '31',
+        'green': '32',
+        'yellow': '33',
+        'blue': '34',
+        'magenta': '35',
+        'cyan': '36',
+        'white': '37'
+    }
+    
+    reset = '\033[0m'
+    
+    # Start with empty formatting
+    formatting = '\033['
+    
+    # Add bold if requested
+    if bold:
+        formatting += '1'
+        # Add separator if we're also adding color
+        if color:
+            formatting += ';'
+    
+    # Add color if requested
+    if color and color.lower() in colors:
+        formatting += colors[color.lower()]
+    
+    # Complete the escape sequence
+    formatting += 'm'
+    
+    # If no formatting requested, don't add codes
+    if formatting == '\033[m':
+        formatting = ''
+        reset = ''
+    
+    # Use the built-in print function
+    __builtins__['print'](formatting + str(text) + reset)
