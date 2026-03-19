@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            # Add command line scripts here
+            'lulutils=lulutils.cli:main',
         ],
     },
     author="Ke-Han Lu",
